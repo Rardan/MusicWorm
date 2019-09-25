@@ -53,6 +53,8 @@ namespace MusicWorm
 
             services.AddTransient<IMailService, NullMailService>();
 
+            services.AddScoped<IMusicRepository, MusicRepository>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
         }
