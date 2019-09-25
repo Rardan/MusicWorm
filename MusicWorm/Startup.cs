@@ -13,6 +13,8 @@ using MusicWorm.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MusicWorm.Services;
+using Newtonsoft.Json;
+using MusicWorm.Models;
 
 namespace MusicWorm
 {
@@ -35,16 +37,24 @@ namespace MusicWorm
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddEntityFrameworkNpgsql()
+                .AddDbContext<WormDbContext>(cfg =>
+                {
+                    cfg.UseNpgsql(Configuration.GetConnectionString("WormConnectionString"));
+                });
 
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            //services.AddDefaultIdentity<StoreUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<WormDbContext>();
+            services.AddIdentity<StoreUser, IdentityRole>(cfg =>
+            {
+                cfg.User.RequireUniqueEmail = true;
+            })
+            .AddEntityFrameworkStores<WormDbContext>();
 
             services.AddTransient<IMailService, NullMailService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
