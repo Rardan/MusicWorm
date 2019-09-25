@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MusicWorm.Services;
 using Newtonsoft.Json;
 using MusicWorm.Models;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace MusicWorm
 {
@@ -45,13 +46,14 @@ namespace MusicWorm
 
             //services.AddDefaultIdentity<StoreUser, IdentityRole>()
             //    .AddEntityFrameworkStores<WormDbContext>();
+
             services.AddIdentity<StoreUser, IdentityRole>(cfg =>
             {
                 cfg.User.RequireUniqueEmail = true;
             })
             .AddEntityFrameworkStores<WormDbContext>();
 
-            services.AddTransient<IMailService, NullMailService>();
+            services.AddTransient<IEmailSender, NullMailService>();
 
             services.AddScoped<IMusicRepository, MusicRepository>();
 

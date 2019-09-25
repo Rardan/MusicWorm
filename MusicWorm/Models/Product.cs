@@ -12,7 +12,7 @@ namespace MusicWorm.Models
         public string Genre { get; set; }
         public decimal Price { get; set; }
         public string AlbumDescription { get; set; }
-        public string ArtistId { get; set; }
+        public int ArtistId { get; set; }
         public DateTime AlbumDating { get; set; }
         public string Photo { get; set; }
 

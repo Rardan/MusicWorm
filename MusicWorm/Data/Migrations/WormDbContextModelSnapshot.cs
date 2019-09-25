@@ -133,7 +133,7 @@ namespace MusicWorm.Migrations
 
                     b.Property<string>("Country");
 
-                    b.Property<int>("Name");
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
@@ -189,13 +189,11 @@ namespace MusicWorm.Migrations
 
                     b.Property<string>("AlbumDescription");
 
-                    b.Property<string>("ArtistId");
-
-                    b.Property<int?>("ArtistId1");
-
-                    b.Property<string>("Category");
+                    b.Property<int>("ArtistId");
 
                     b.Property<string>("Genre");
+
+                    b.Property<string>("Photo");
 
                     b.Property<decimal>("Price");
 
@@ -203,7 +201,7 @@ namespace MusicWorm.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArtistId1");
+                    b.HasIndex("ArtistId");
 
                     b.ToTable("Products");
                 });
@@ -346,7 +344,8 @@ namespace MusicWorm.Migrations
                 {
                     b.HasOne("MusicWorm.Models.Artist")
                         .WithMany("Albums")
-                        .HasForeignKey("ArtistId1");
+                        .HasForeignKey("ArtistId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MusicWorm.Models.Storage", b =>

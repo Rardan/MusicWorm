@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using MusicWorm.Models;
 using MusicWorm.Services;
@@ -12,9 +13,9 @@ namespace MusicWorm.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IMailService _mailService;
+        private readonly IEmailSender _mailService;
 
-        public HomeController(IMailService mailService)
+        public HomeController(IEmailSender mailService)
         {
             _mailService = mailService;
         }
@@ -26,16 +27,12 @@ namespace MusicWorm.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 
         [HttpGet("Contact")]
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Contact us.";
-
             return View();
         }
 
@@ -44,7 +41,8 @@ namespace MusicWorm.Controllers
         {
             if (ModelState.IsValid)
             {
-                _mailService.SendMessage("contact@musicworm.com", model.Subject, $"From {model.Name} - {model.Email}, Message: {model.Message}");
+                //_mailService.SendMessage("contact@musicworm.com", model.Subject, $"From {model.Name} - {model.Email}, Message: {model.Message}");
+                _mailService.SendEmailAsync("contact@musicworm.com", model.Subject, model.Message);
                 ViewBag.UserMessage = "Mail Sent";
                 ModelState.Clear();
             }
