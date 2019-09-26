@@ -74,7 +74,9 @@ namespace MusicWorm.Data
             {
                 _logger.LogInformation("GetAllProducts were called");
                 return _ctx.Products
-                    .OrderBy(p => p.Title)
+                    .Include(s => s.Storage)
+                    .Include(p => p.Artist)
+                    .OrderBy(p => p.Artist.Name)
                     .ToList();
             }
             catch (Exception ex)

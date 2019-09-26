@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MusicWorm.Migrations
 {
     [DbContext(typeof(WormDbContext))]
-    [Migration("20190925174238_InitialMigration")]
+    [Migration("20190926132219_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -344,7 +344,7 @@ namespace MusicWorm.Migrations
 
             modelBuilder.Entity("MusicWorm.Models.Product", b =>
                 {
-                    b.HasOne("MusicWorm.Models.Artist")
+                    b.HasOne("MusicWorm.Models.Artist", "Artist")
                         .WithMany("Albums")
                         .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade);

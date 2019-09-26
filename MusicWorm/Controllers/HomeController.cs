@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using MusicWorm.Data;
 using MusicWorm.Models;
 using MusicWorm.Services;
 using MusicWorm.ViewModels;
@@ -14,17 +15,21 @@ namespace MusicWorm.Controllers
     public class HomeController : Controller
     {
         private readonly IEmailSender _mailService;
+        private readonly IMusicRepository _repository;
 
-        public HomeController(IEmailSender mailService)
+        public HomeController(IEmailSender mailService, IMusicRepository repository)
         {
             _mailService = mailService;
+            _repository = repository;
         }
 
+        [HttpGet("Index")]
         public IActionResult Index()
         {
             return View();
         }
 
+        [HttpGet("About")]
         public IActionResult About()
         {
             return View();
@@ -58,6 +63,13 @@ namespace MusicWorm.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpGet("Shop")]
+        public IActionResult Shop()
+        {
+            var products = _repository.GetAllProducts();
+            return View(products);
         }
     }
 }

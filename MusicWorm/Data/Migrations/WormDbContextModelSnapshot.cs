@@ -342,7 +342,7 @@ namespace MusicWorm.Migrations
 
             modelBuilder.Entity("MusicWorm.Models.Product", b =>
                 {
-                    b.HasOne("MusicWorm.Models.Artist")
+                    b.HasOne("MusicWorm.Models.Artist", "Artist")
                         .WithMany("Albums")
                         .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade);

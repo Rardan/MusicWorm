@@ -16,6 +16,7 @@ namespace MusicWorm.Models
         public DateTime AlbumDating { get; set; }
         public string Photo { get; set; }
 
+        public Artist Artist { get; set; }
         public Storage Storage { get; set; }
     }
 }
