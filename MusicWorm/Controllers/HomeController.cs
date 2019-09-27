@@ -23,7 +23,6 @@ namespace MusicWorm.Controllers
             _repository = repository;
         }
 
-        [HttpGet("Index")]
         public IActionResult Index()
         {
             return View();
