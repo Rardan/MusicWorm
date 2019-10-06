@@ -20,9 +20,9 @@
                     <li>Genre: @p.Genre</li>
                     <li>Price: @p.Price</li>
                     <li>Description: @p.AlbumDescription</li>
-                    <li>On stock: @p.Storage.Quantity</li>
+                    <li>On stock: @p.Storage.Amount</li>
                 </ul>
-                @if (p.Storage.Quantity > 0)
+                @if (p.Storage.Amount > 0)
                 {
                     <button id="buyButton" class="btn btn-success">Buy</button>
                 }

@@ -55,10 +55,16 @@ namespace MusicWorm
 
             services.AddTransient<IEmailSender, NullMailService>();
 
-            services.AddScoped<IMusicRepository, MusicRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(sp => ShoppingCart.GetCart(sp));
+            
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+            services.AddMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -95,7 +101,7 @@ namespace MusicWorm
         {
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var UserManager = serviceProvider.GetRequiredService<UserManager<StoreUser>>();
-            string[] roleNames = { "Admin", "Owner", "Manager", "User" };
+            string[] roleNames = { "Admin", "Owner", "Employee", "User" };
             IdentityResult identityResult;
 
             foreach (var roleName in roleNames)

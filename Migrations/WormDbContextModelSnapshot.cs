@@ -145,49 +145,11 @@ namespace MusicWorm.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AdressLine1")
-                        .IsRequired()
-                        .HasMaxLength(100);
-
-                    b.Property<string>("AdressLine2");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Condidtion");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
                     b.Property<DateTime>("OrderDate");
 
                     b.Property<string>("OrderNumber");
 
-                    b.Property<decimal>("OrderTotal");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(15);
-
                     b.Property<string>("UserId");
-
-                    b.Property<string>("ZipCode")
-                        .IsRequired()
-                        .HasMaxLength(5);
 
                     b.HasKey("Id");
 
@@ -201,13 +163,13 @@ namespace MusicWorm.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("Amount");
+                    b.Property<int?>("OrderId");
 
-                    b.Property<int>("OrderId");
+                    b.Property<int?>("ProductId");
 
-                    b.Property<decimal>("Price");
+                    b.Property<int>("Quantity");
 
-                    b.Property<int>("ProductId");
+                    b.Property<decimal>("UnitPrice");
 
                     b.HasKey("Id");
 
@@ -244,32 +206,14 @@ namespace MusicWorm.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("MusicWorm.Models.ShoppingCartItem", b =>
-                {
-                    b.Property<int>("ShoppingCartItemId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("Amount");
-
-                    b.Property<int?>("ProductId");
-
-                    b.Property<string>("ShoppingCartId");
-
-                    b.HasKey("ShoppingCartItemId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ShoppingCartItems");
-                });
-
             modelBuilder.Entity("MusicWorm.Models.Storage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("Amount");
-
                     b.Property<int>("ProductId");
+
+                    b.Property<int>("Quantity");
 
                     b.HasKey("Id");
 
@@ -389,13 +333,11 @@ namespace MusicWorm.Migrations
                 {
                     b.HasOne("MusicWorm.Models.Order", "Order")
                         .WithMany("Items")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("MusicWorm.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("MusicWorm.Models.Product", b =>
@@ -404,13 +346,6 @@ namespace MusicWorm.Migrations
                         .WithMany("Albums")
                         .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("MusicWorm.Models.ShoppingCartItem", b =>
-                {
-                    b.HasOne("MusicWorm.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("MusicWorm.Models.Storage", b =>

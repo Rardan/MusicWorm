@@ -10,10 +10,10 @@ namespace MusicWorm.Models
     public class Storage
     {
         public int Id { get; set; }
-        [DefaultValue(0)]
-        public int Quantity { get; set; }
-
         public int ProductId { get; set; }
+        public int Amount { get; set; }
+
+        
         public Product Product { get; set; }
     }
 }

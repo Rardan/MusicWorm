@@ -15,12 +15,12 @@ namespace MusicWorm.Controllers
     public class HomeController : Controller
     {
         private readonly IEmailSender _mailService;
-        private readonly IMusicRepository _repository;
+        private readonly IProductRepository _productRepository;
 
-        public HomeController(IEmailSender mailService, IMusicRepository repository)
+        public HomeController(IEmailSender mailService, IProductRepository productRepository)
         {
             _mailService = mailService;
-            _repository = repository;
+            _productRepository = productRepository;
         }
 
         public IActionResult Index()
@@ -45,7 +45,6 @@ namespace MusicWorm.Controllers
         {
             if (ModelState.IsValid)
             {
-                //_mailService.SendMessage("contact@musicworm.com", model.Subject, $"From {model.Name} - {model.Email}, Message: {model.Message}");
                 _mailService.SendEmailAsync("contact@musicworm.com", model.Subject, model.Message);
                 ViewBag.UserMessage = "Mail Sent";
                 ModelState.Clear();
@@ -67,7 +66,7 @@ namespace MusicWorm.Controllers
         [HttpGet("Shop")]
         public IActionResult Shop()
         {
-            var products = _repository.GetAllProducts();
+            var products = _productRepository.Products;
             return View(products);
         }
     }

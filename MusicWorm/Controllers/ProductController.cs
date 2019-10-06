@@ -62,6 +62,12 @@ namespace MusicWorm.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(product);
+                Storage storage = new Storage
+                {
+                    ProductId = product.Id,
+                    Amount = 0
+                };
+                _context.Add(storage);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
