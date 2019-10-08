@@ -88,6 +88,7 @@ namespace MusicWorm.Models
                 (ShoppingCartItems =
                 _wormDbContext.ShoppingCartItems.Where(c => c.ShoppingCartId == ShoppingCartId)
                 .Include(s => s.Product)
+                .ThenInclude(a => a.Artist)
                 .ToList());
         }
 

@@ -31,7 +31,8 @@ namespace MusicWorm.Controllers
             return View();
         }
 
-        public async Task<IActionResult> CheckoutAsync(Order order)
+        [HttpPost]
+        public async Task<IActionResult> Checkout(Order order)
         {
             var items = _shoppingCart.GetShoppingCartItems();
             _shoppingCart.ShoppingCartItems = items;

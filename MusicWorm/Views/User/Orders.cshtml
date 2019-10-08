@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Order>
+
+<h2>Your orders:</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Order date</th>
+            <th>Order items</th>
+            <th>Total price</th>
+            <th>State</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>@item.OrderDate</th>
+                <th>
+                    <ul>
+                        @foreach (var i in item.Items)
+                        {
+
+                            <li>@i</li>
+                        }
+                    </ul>
+                </th>
+                <th>@item.OrderTotal.ToString()</th>
+                <th>@item.Condidtion</th>
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -24,7 +24,7 @@
                 </ul>
                 @if (p.Storage.Amount > 0)
                 {
-                    <button id="buyButton" class="btn btn-success">Buy</button>
+                    <a id="buyButton" class="btn btn-success" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-productId="@p.Id">Buy</a>
                 }
                 else
                 {

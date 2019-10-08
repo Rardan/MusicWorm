@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MusicWorm.Models;
 using System;
 using System.Collections.Generic;
@@ -12,15 +13,12 @@ namespace MusicWorm.Data
     {
         private readonly WormDbContext _wormDbContext;
         private readonly ShoppingCart _shoppingCart;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         
         public OrderRepository(WormDbContext wormDbContext, 
-            ShoppingCart shoppingCart, 
-            IHttpContextAccessor httpContextAccessor)
+            ShoppingCart shoppingCart)
         {
             _wormDbContext = wormDbContext;
             _shoppingCart = shoppingCart;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         public void CreateOrder(Order order, StoreUser user)
@@ -28,6 +26,8 @@ namespace MusicWorm.Data
             order.OrderDate = DateTime.Now;
             order.OrderNumber = DateTime.Now.ToString();
             order.User = user;
+            order.OrderTotal = _shoppingCart.GetShoppingCartTotal();
+            order.Condidtion = "Created";
             _wormDbContext.Add(order);
 
             var shoppingCartItems = _shoppingCart.ShoppingCartItems;
@@ -38,13 +38,26 @@ namespace MusicWorm.Data
                 {
                     ProductId = item.Product.Id,
                     OrderId = order.Id,
-                    Price = item.Product.Price,
+                    Price = item.Product.Price * item.Amount,
                     Amount = item.Amount
                 };
+                var itemStorage = _wormDbContext.Store.FirstOrDefault(s => s.ProductId == item.Product.Id);
+                itemStorage.Amount = itemStorage.Amount - orderItem.Amount;
+                _wormDbContext.Store.Update(itemStorage);
+
                 _wormDbContext.OrderItems.Add(orderItem);
             }
-
             _wormDbContext.SaveChanges();
+        }
+
+        public IEnumerable<Order> GetOrdersByUser(StoreUser user)
+        {
+            var orders = _wormDbContext.Orders
+                .Include(i => i.Items)
+                
+                .Where(o => o.User == user)
+                .ToList();
+            return orders;
         }
     }
 }
