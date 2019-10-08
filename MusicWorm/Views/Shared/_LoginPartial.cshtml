@@ -7,6 +7,28 @@
 {
     <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="ml-auto justify-content-end">
         <ul class="nav navbar-nav ml-auto justify-content-end">
+
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Admin" asp-action="Index">Admin menu</a>
+                </li>
+            }
+
+            @if (User.IsInRole("Owner"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Owner" asp-action="Index">Owner menu</a>
+                </li>
+            }
+
+            @if (User.IsInRole("Employee"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Employee" asp-action="Index">Employee menu</a>
+                </li>
+            }
+
             <li class="nav-item">
                 <a class="nav-link" asp-controller="User" asp-action="Orders">Your orders</a>
             </li>

@@ -13,8 +13,8 @@ namespace MusicWorm.Data
     {
         private readonly WormDbContext _wormDbContext;
         private readonly ShoppingCart _shoppingCart;
-        
-        public OrderRepository(WormDbContext wormDbContext, 
+
+        public OrderRepository(WormDbContext wormDbContext,
             ShoppingCart shoppingCart)
         {
             _wormDbContext = wormDbContext;
@@ -24,7 +24,7 @@ namespace MusicWorm.Data
         public void CreateOrder(Order order, StoreUser user)
         {
             order.OrderDate = DateTime.Now;
-            order.OrderNumber = DateTime.Now.ToString();
+            order.OrderNumber = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString();
             order.User = user;
             order.OrderTotal = _shoppingCart.GetShoppingCartTotal();
             order.Condidtion = "Created";
@@ -50,11 +50,22 @@ namespace MusicWorm.Data
             _wormDbContext.SaveChanges();
         }
 
+        public Order GetOrderByNumber(string orderNumber)
+        {
+            var order = _wormDbContext.Orders
+                .Include(i => i.Items)
+                .Include("Items.Product")
+                .Include("Items.Product.Artist")
+                .FirstOrDefault(n => n.OrderNumber == orderNumber);
+
+            return order;
+        }
+
         public IEnumerable<Order> GetOrdersByUser(StoreUser user)
         {
             var orders = _wormDbContext.Orders
                 .Include(i => i.Items)
-                
+
                 .Where(o => o.User == user)
                 .ToList();
             return orders;

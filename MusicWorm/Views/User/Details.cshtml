@@ -1,0 +1,47 @@
+﻿@model Order
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Detalis to order: @Model.OrderNumber</h2>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Items</th>
+                    <th>Total</th>
+                    <th>State</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>@Model.OrderDate</th>
+                    <th>
+                        @foreach (var item in Model.Items)
+                        {
+                            <ul>
+                                <li>@item.Product.Title - @item.Product.Artist.Name  x@(item.Amount)</li>
+                            </ul>
+                        }
+                    </th>
+                    <th>@Model.OrderTotal</th>
+                    <th>@Model.Condidtion</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card card-body bg-light">
+            <h4>Delivery address</h4>
+            <p>@Model.FirstName @Model.LastName</p>
+            <p>@Model.AdressLine1 @Model.AdressLine2</p>
+            <p>@Model.ZipCode @Model.City</p>
+            <p>@Model.Country</p>
+            <p></p>
+            <p>email: @Model.Email</p>
+            <p>phone: @Model.PhoneNumber</p>
+
+        </div>
+    </div>
+</div>

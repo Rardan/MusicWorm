@@ -1,4 +1,8 @@
-﻿namespace MusicWorm.Models
+﻿using Microsoft.EntityFrameworkCore;
+using MusicWorm.Data;
+using System.Linq;
+
+namespace MusicWorm.Models
 {
     public class OrderItem
     {

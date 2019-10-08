@@ -5,9 +5,7 @@
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>Order date</th>
-            <th>Order items</th>
-            <th>Total price</th>
+            <th>Order number</th>
             <th>State</th>
         </tr>
     </thead>
@@ -15,17 +13,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <th>@item.OrderDate</th>
-                <th>
-                    <ul>
-                        @foreach (var i in item.Items)
-                        {
-
-                            <li>@i</li>
-                        }
-                    </ul>
-                </th>
-                <th>@item.OrderTotal.ToString()</th>
+                <th><a asp-controller="User" asp-action="Details" asp-route-orderNumber="@item.OrderNumber">@item.OrderNumber</a></th>
                 <th>@item.Condidtion</th>
             </tr>
         }
