@@ -68,7 +68,7 @@ namespace MusicWorm.Controllers
         [HttpGet("Shop")]
         public IActionResult Shop()
         {
-            var products = _productRepository.Products;
+            var products = _productRepository.Products.OrderBy(p => p.Artist.Name);
             return View(products);
         }
     }

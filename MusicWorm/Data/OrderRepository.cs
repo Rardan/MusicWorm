@@ -23,31 +23,41 @@ namespace MusicWorm.Data
 
         public void CreateOrder(Order order, StoreUser user)
         {
-            order.OrderDate = DateTime.Now;
-            order.OrderNumber = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString();
-            order.User = user;
-            order.OrderTotal = _shoppingCart.GetShoppingCartTotal();
-            order.Condidtion = "Created";
-            _wormDbContext.Add(order);
-
-            var shoppingCartItems = _shoppingCart.ShoppingCartItems;
-
-            foreach (var item in shoppingCartItems)
+            var transaction = _wormDbContext.Database.BeginTransaction();
+            try
             {
-                var orderItem = new OrderItem()
-                {
-                    ProductId = item.Product.Id,
-                    OrderId = order.Id,
-                    Price = item.Product.Price * item.Amount,
-                    Amount = item.Amount
-                };
-                var itemStorage = _wormDbContext.Store.FirstOrDefault(s => s.ProductId == item.Product.Id);
-                itemStorage.Amount = itemStorage.Amount - orderItem.Amount;
-                _wormDbContext.Store.Update(itemStorage);
+                order.OrderDate = DateTime.Now;
+                order.OrderNumber = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString();
+                order.User = user;
+                order.OrderTotal = _shoppingCart.GetShoppingCartTotal();
+                order.Condidtion = "Created";
+                _wormDbContext.Add(order);
 
-                _wormDbContext.OrderItems.Add(orderItem);
+                var shoppingCartItems = _shoppingCart.ShoppingCartItems;
+
+                foreach (var item in shoppingCartItems)
+                {
+                    var orderItem = new OrderItem()
+                    {
+                        ProductId = item.Product.Id,
+                        OrderId = order.Id,
+                        Price = item.Product.Price * item.Amount,
+                        Amount = item.Amount
+                    };
+                    var itemStorage = _wormDbContext.Store.FirstOrDefault(s => s.ProductId == item.Product.Id);
+                    itemStorage.Amount = itemStorage.Amount - orderItem.Amount;
+                    _wormDbContext.Store.Update(itemStorage);
+
+                    _wormDbContext.OrderItems.Add(orderItem);
+                }
+                _wormDbContext.SaveChanges();
+
+                transaction.Commit();
             }
-            _wormDbContext.SaveChanges();
+            catch (Exception e)
+            {
+            }
+            
         }
 
         public Order GetOrderByNumber(string orderNumber)

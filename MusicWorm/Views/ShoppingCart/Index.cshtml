@@ -21,9 +21,9 @@
                     <td class="text-right">@item.Product.Price.ToString("c")</td>
                     <td class="text-right">@((item.Amount * item.Product.Price).ToString("c"))</td>
                     <td class="text-center">
-                        <a class="glyphicon glyphicon-remove text-danger remove"
+                        <a class="text-danger remove"
                            asp-controller="ShoppingCart" asp-action="RemoveFromShoppingCart"
-                           asp-route-productId="@item.Product.Id"></a>
+                           asp-route-productId="@item.Product.Id">X</a>
                     </td>
                 </tr>
             }

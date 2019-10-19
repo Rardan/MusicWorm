@@ -1,1 +1,6 @@
 ﻿<h1>Welcome to Music Worm shop!</h1>
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <h2>Please log in to get started</h2>
+}

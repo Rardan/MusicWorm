@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Storage>
+
+
+<div>
+    <h2>Manage Storage</h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Amount</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@item.Product.Title</td>
+                <td>@item.Product.Artist.Name</td>
+                <td>@item.Amount</td>
+                <td align="center">
+                    <a class="btn btn-success"
+                       asp-controller="Employee" asp-action="IncreaseAmountInStore"
+                       asp-route-productId="@item.Product.Id">+</a>
+                </td>
+                <td align="center">
+                    <a class="btn btn-danger"
+                       asp-controller="Employee" asp-action="DecreaseAmountInStore"
+                       asp-route-productId="@item.Product.Id">-</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
