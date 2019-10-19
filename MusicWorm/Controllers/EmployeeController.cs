@@ -12,10 +12,12 @@ namespace MusicWorm.Controllers
     public class EmployeeController : Controller
     {
         private readonly IProductRepository _productRepository;
+        private readonly IOrderRepository _orderRepository;
 
-        public EmployeeController(IProductRepository productRepository)
+        public EmployeeController(IProductRepository productRepository, IOrderRepository orderRepository)
         {
             _productRepository = productRepository;
+            _orderRepository = orderRepository;
         }
 
         public IActionResult Index()
@@ -49,6 +51,33 @@ namespace MusicWorm.Controllers
             }
 
             return RedirectToAction("ManageStorage");
+        }
+
+        public IActionResult ManageOrderStatus()
+        {
+            var orders = _orderRepository.Orders;
+
+            return View(orders);
+        }
+
+        public RedirectToActionResult ChangeOrderStatus(string orderNumber)
+        {
+            var order = _orderRepository.GetOrderByNumber(orderNumber);
+
+            if (order != null)
+            {
+                if(order.Condidtion == "Created")
+                {
+                    _orderRepository.ChangeOrderStatus(order, "Packed");
+                }
+                else if (order.Condidtion == "Packed")
+                {
+                    _orderRepository.ChangeOrderStatus(order, "Shipped");
+                }
+                
+            }
+
+            return RedirectToAction("ManageOrderStatus");
         }
     }
 }

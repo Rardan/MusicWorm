@@ -21,6 +21,18 @@ namespace MusicWorm.Data
             _shoppingCart = shoppingCart;
         }
 
+        public IEnumerable<Order> Orders => _wormDbContext.Orders.OrderBy(o => o.OrderNumber);
+
+        public void ChangeOrderStatus(Order order, string state)
+        {
+            if (order != null)
+            {
+                order.Condidtion = state;
+                _wormDbContext.Update(order);
+                _wormDbContext.SaveChanges();
+            }
+        }
+
         public void CreateOrder(Order order, StoreUser user)
         {
             var transaction = _wormDbContext.Database.BeginTransaction();
@@ -55,9 +67,7 @@ namespace MusicWorm.Data
                 transaction.Commit();
             }
             catch (Exception e)
-            {
-            }
-            
+            { }
         }
 
         public Order GetOrderByNumber(string orderNumber)

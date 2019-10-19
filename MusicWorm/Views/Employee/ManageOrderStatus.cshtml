@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Order>
+
+<div>
+    <h2>ManageOrderState</h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Order Number</th>
+                <th>State</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><a asp-controller="User" asp-action="Details" asp-route-orderNumber="@item.OrderNumber">@item.OrderNumber</a></td>
+                    <td>@item.Condidtion</td>
+                    @if (item.Condidtion == "Created")
+                    {
+                        <td>
+                            <a class="btn btn-warning"
+                               asp-controller="Employee" asp-action="ChangeOrderStatus"
+                               asp-route-orderNumber="@item.OrderNumber">Change status: Packed</a>
+                        </td>
+                    }
+                    @if (item.Condidtion == "Packed")
+                    {
+                        <td><a class="btn btn-danger"
+                               asp-controller="Employee" asp-action="ChangeOrderStatus"
+                               asp-route-orderNumber="@item.OrderNumber">Change status: Shipped</a></td>
+                    }
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
