@@ -39,7 +39,9 @@ namespace MusicWorm.Data
             try
             {
                 order.OrderDate = DateTime.Now;
-                order.OrderNumber = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString();
+                order.OrderNumber = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() 
+                    + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() 
+                    + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString();
                 order.User = user;
                 order.OrderTotal = _shoppingCart.GetShoppingCartTotal();
                 order.Condidtion = "Created";
