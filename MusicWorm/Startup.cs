@@ -41,7 +41,7 @@ namespace MusicWorm
             services.AddEntityFrameworkNpgsql()
                 .AddDbContext<WormDbContext>(cfg =>
                 {
-                    cfg.UseNpgsql(Configuration.GetConnectionString("WormConnectionString"));
+                    cfg.UseNpgsql(Configuration.GetConnectionString("WormConnectionStringAzure"));
                 });
 
             //services.AddDefaultIdentity<StoreUser, IdentityRole>()

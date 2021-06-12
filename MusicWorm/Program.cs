@@ -20,7 +20,8 @@ namespace MusicWorm
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration(SetupConfiguration)
-                .UseStartup<Startup>();
+            .UseIISIntegration()
+            .UseStartup<Startup>();
 
         public static void SetupConfiguration(WebHostBuilderContext ctx, IConfigurationBuilder builder)
         {
