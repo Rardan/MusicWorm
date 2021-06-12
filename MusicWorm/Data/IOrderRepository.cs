@@ -7,10 +7,12 @@ namespace MusicWorm.Data
     {
         void CreateOrder(Order order, StoreUser user);
         IEnumerable<Order> GetOrdersByUser(StoreUser user);
+        IEnumerable<string> GetOrderNumbers();
         IEnumerable<Order> Orders { get; }
 
         Order GetOrderByNumber(string orderNumber);
 
         void ChangeOrderStatus(Order order, string state);
+        void DeleteOrder(Order order);
     }
 }

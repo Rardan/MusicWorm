@@ -47,6 +47,17 @@ namespace MusicWorm.Data
 
         public IEnumerable<Storage> Storages => _wormDbContext.Store.Include(p => p.Product).ThenInclude(a => a.Artist);
 
-        
+        public Product CreateProduct(Product product)
+        {
+            _wormDbContext.Add(product);
+            _wormDbContext.SaveChanges();
+            return product;
+        }
+
+        public void DeleteProduct(Product product)
+        {
+            _wormDbContext.Remove(product);
+            _wormDbContext.SaveChanges();
+        }
     }
 }

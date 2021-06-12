@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ResultViewModel>
+@{
+    ViewData["Title"] = "Experiment Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Experiment here.</h1>
+    <p>Experiment results here.</p>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Test name</th>
+                <th>1</th>
+                <th>10</th>
+                <th>20</th>
+                <th>50</th>
+                <th>100</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Result1.Time.ToString("0.000") ± @item.Result1.Deviation.ToString("0.000")</td>
+                <td>@item.Result10.Time.ToString("0.000") ± @item.Result10.Deviation.ToString("0.000")</td>
+                <td>@item.Result20.Time.ToString("0.000") ± @item.Result20.Deviation.ToString("0.000")</td>
+                <td>@item.Result50.Time.ToString("0.000") ± @item.Result50.Deviation.ToString("0.000")</td>
+                <td>@item.Result100.Time.ToString("0.000") ± @item.Result100.Deviation.ToString("0.000")</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+

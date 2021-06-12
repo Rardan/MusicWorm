@@ -12,5 +12,7 @@ namespace MusicWorm.Data
 
         void IncreaseInStorage(int productId);
         void DecreaseInStorage(int productId);
+        Product CreateProduct(Product product);
+        void DeleteProduct(Product product);
     }
 }

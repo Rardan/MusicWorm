@@ -20,17 +20,17 @@
                     <li>Genre: @p.Genre</li>
                     <li>Price: @p.Price</li>
                     <li>Description: @p.AlbumDescription</li>
-                    <li>On stock: @p.Storage.Amount</li>
+                    <li>On stock: </li>
                 </ul>
-                @if (p.Storage.Amount > 0)
-                {
-                    <a id="buyButton" class="btn btn-success" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-productId="@p.Id">Buy</a>
-                }
-                else
-                {
-                    <button class="btn btn-dark" disabled>Sold out</button>
-                }
-
+                @*@if (p.Storage.Amount > 0)
+        {
+            <a id="buyButton" class="btn btn-success" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-productId="@p.Id">Buy</a>
+        }
+        else
+        {
+            <button class="btn btn-dark" disabled>Sold out</button>
+        }*@
+                <a id="buyButton" class="btn btn-success" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-productId="@p.Id">Buy</a>
 
             </div>
         </div>

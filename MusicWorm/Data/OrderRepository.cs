@@ -35,41 +35,42 @@ namespace MusicWorm.Data
 
         public void CreateOrder(Order order, StoreUser user)
         {
-            var transaction = _wormDbContext.Database.BeginTransaction();
-            try
+            //var transaction = _wormDbContext.Database.BeginTransaction();
+            //try
+            //{
+            order.OrderDate = DateTime.Now;
+            order.OrderNumber = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString()
+                + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString()
+                + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString();
+            order.User = user;
+            order.OrderTotal = _shoppingCart.GetShoppingCartTotal();
+            order.Condidtion = "Created";
+            _wormDbContext.Add(order);
+
+            var shoppingCartItems = _shoppingCart.ShoppingCartItems;
+
+            foreach (var item in shoppingCartItems)
             {
-                order.OrderDate = DateTime.Now;
-                order.OrderNumber = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() 
-                    + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() 
-                    + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString();
-                order.User = user;
-                order.OrderTotal = _shoppingCart.GetShoppingCartTotal();
-                order.Condidtion = "Created";
-                _wormDbContext.Add(order);
-
-                var shoppingCartItems = _shoppingCart.ShoppingCartItems;
-
-                foreach (var item in shoppingCartItems)
+                var orderItem = new OrderItem()
                 {
-                    var orderItem = new OrderItem()
-                    {
-                        ProductId = item.Product.Id,
-                        OrderId = order.Id,
-                        Price = item.Product.Price * item.Amount,
-                        Amount = item.Amount
-                    };
-                    var itemStorage = _wormDbContext.Store.FirstOrDefault(s => s.ProductId == item.Product.Id);
-                    itemStorage.Amount = itemStorage.Amount - orderItem.Amount;
-                    _wormDbContext.Store.Update(itemStorage);
+                    ProductId = item.Product.Id,
+                    OrderId = order.Id,
+                    Price = item.Product.Price * item.Amount,
+                    Amount = item.Amount
+                };
+                //    var itemStorage = _wormDbContext.Store.FirstOrDefault(s => s.ProductId == item.Product.Id);
+                //    itemStorage.Amount = itemStorage.Amount - orderItem.Amount;
+                //    _wormDbContext.Store.Update(itemStorage);
 
-                    _wormDbContext.OrderItems.Add(orderItem);
-                }
-                _wormDbContext.SaveChanges();
-
-                transaction.Commit();
+                _wormDbContext.OrderItems.Add(orderItem);
             }
-            catch (Exception e)
-            { }
+            _wormDbContext.SaveChanges();
+            //    transaction.Commit();
+            //}
+            //catch (Exception e)
+            //{
+            //    transaction.Rollback();
+            //}
         }
 
         public Order GetOrderByNumber(string orderNumber)
@@ -91,6 +92,18 @@ namespace MusicWorm.Data
                 .Where(o => o.User == user)
                 .ToList();
             return orders;
+        }
+
+        public IEnumerable<string> GetOrderNumbers()
+        {
+            var numbers = _wormDbContext.Orders.Select(o => o.OrderNumber).ToList();
+            return numbers;
+        }
+
+        public void DeleteOrder(Order order)
+        {
+            _wormDbContext.Remove(order);
+            _wormDbContext.SaveChanges();
         }
     }
 }
