@@ -22,6 +22,54 @@ namespace MusicWorm.Controllers
             return View();
         }
 
+        public IActionResult PrepareArtists()
+        {
+            _experimentRepository.PrepareArtists();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult PrepareProducts()
+        {
+            _experimentRepository.PrepareProducts();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult PrepareOrders()
+        {
+            _experimentRepository.PrepareOrders();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult CreateProduct(int times)
+        {
+            var result = _experimentRepository.CreateProduct(times);
+            return View(result);
+        }
+
+        public IActionResult AddToShoppingCart(int times)
+        {
+            var result = _experimentRepository.AddToShoppingCart(times);
+            return View(result);
+        }
+
+        public IActionResult CreateOrder(int times)
+        {
+            var result = _experimentRepository.CreateOrder(times);
+            return View(result);
+        }
+
+        public IActionResult GetOrderByNumber(int times)
+        {
+            var result = _experimentRepository.GetOrderByNumber(times);
+            return View(result);
+        }
+
+        public IActionResult GetAllOrders(int times)
+        {
+            var result = _experimentRepository.GetAllOrders(times);
+            return View(result);
+        }
+
         public IActionResult Results()
         {
            //_experimentRepository.DeleteAllData();

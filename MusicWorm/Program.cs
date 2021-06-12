@@ -20,6 +20,7 @@ namespace MusicWorm
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration(SetupConfiguration)
+            .UseKestrel(opt => opt.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(120))
             .UseIISIntegration()
             .UseStartup<Startup>();
 

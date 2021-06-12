@@ -16,6 +16,9 @@ namespace MusicWorm.Data
         ResultViewModel GetOrderByNumber();
         PartialResult GetOrderByNumber(int times);
         void PrepareData();
+        void PrepareArtists();
+        void PrepareProducts();
+        void PrepareOrders();
         void DeleteAllData();
     }
 }

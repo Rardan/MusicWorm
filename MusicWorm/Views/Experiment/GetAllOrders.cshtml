@@ -1,0 +1,23 @@
+﻿@model PartialResult
+
+<div class="text-center">
+    <h1 class="display-4">Experiment here.</h1>
+    <p>Experiment results here.</p>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Deviation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Time.ToString("0.000")</td>
+                <td>@Model.Deviation.ToString("0.000")</td>
+
+            </tr>
+        </tbody>
+    </table>
+
+</div>

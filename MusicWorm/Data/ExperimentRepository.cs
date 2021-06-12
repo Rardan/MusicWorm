@@ -13,7 +13,7 @@ namespace MusicWorm.Data
 {
     public class ExperimentRepository : IExperimentRepository
     {
-        private readonly int iterations = 20;
+        private readonly int iterations = 5;
         private readonly IOrderRepository _orderRepository;
         private readonly IProductRepository _productRepository;
         private readonly IArtistRepository _artistRepository;
@@ -90,6 +90,41 @@ namespace MusicWorm.Data
                     var order = PrepareOrder();
                     _orderRepository.CreateOrder(PrepareOrder(), user);
                 }
+            }
+        }
+
+        public void PrepareArtists()
+        {
+            var artists = _artistRepository.Artists.ToList();
+            if (artists.Count() <= 10)
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    _artistRepository.CreateArtist(PrepareArtist());
+                }
+            }
+        }
+
+        public void PrepareProducts()
+        {
+            var products = _productRepository.Products.ToList();
+            if (products.Count() <= 10)
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    _productRepository.CreateProduct(PrepareProduct());
+                }
+            }
+        }
+
+        public void PrepareOrders()
+        {
+            var userName = _httpContextAccessor.HttpContext.User.Identity.Name;
+            var user = _userManager.FindByNameAsync(userName).Result;
+            for (int i = 0; i < 100; i++)
+            {
+                var order = PrepareOrder();
+                _orderRepository.CreateOrder(order, user);
             }
         }
 
@@ -192,11 +227,11 @@ namespace MusicWorm.Data
             List<double> results = new List<double>();
             for (int i = 0; i < iterations; i++)
             {
+                var products = _productRepository.Products;
                 List<double> partial = new List<double>();
                 for (int j = 0; j < times; j++)
                 {
                     _shoppingCart.ClearCart();
-                    var products = _productRepository.Products;
                     var product = products.ElementAt(RandomNumberUtil.GenerateFromRange(0, products.Count()));
                     stopwatch = Stopwatch.StartNew();
                     _shoppingCart.AddToCart(product, 1);
@@ -227,12 +262,12 @@ namespace MusicWorm.Data
             List<double> results = new List<double>();
             for (int i = 0; i < iterations; i++)
             {
+                var userName = _httpContextAccessor.HttpContext.User.Identity.Name;
+                var user = _userManager.FindByNameAsync(userName).Result;
                 List<double> partial = new List<double>();
                 for (int j = 0; j < times; j++)
                 {
                     Order order = PrepareOrder();
-                    var userName = _httpContextAccessor.HttpContext.User.Identity.Name;
-                    var user = _userManager.FindByNameAsync(userName).Result;
                     stopwatch = Stopwatch.StartNew();
                     _orderRepository.CreateOrder(order, user);
                     stopwatch.Stop();
@@ -262,10 +297,10 @@ namespace MusicWorm.Data
             List<double> results = new List<double>();
             for (int i = 0; i < iterations; i++)
             {
+                var orders = _orderRepository.GetOrderNumbers();
                 List<double> partial = new List<double>();
                 for (int j = 0; j < times; j++)
                 {
-                    var orders = _orderRepository.GetOrderNumbers();
                     var selectedOrder = orders.ElementAt(RandomNumberUtil.GenerateFromRange(0, orders.Count()));
                     stopwatch = Stopwatch.StartNew();
                     var order = _orderRepository.GetOrderByNumber(selectedOrder);

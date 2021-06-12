@@ -5,6 +5,58 @@
 <div class="text-center">
     <h1 class="display-4">Experiment here.</h1>
     <p>Experiment here.</p>
-    <a class="btn btn-danger"
-       asp-controller="Experiment" asp-action="Results">Begin experiment</a>
+    <a class="btn btn-danger" asp-controller="Experiment" asp-action="Results">Begin experiment</a>
+
+    <div>
+        <h2>Prepare data</h2>
+        <a class="btn btn-success" asp-controller="Experiment" asp-action="PrepareArtists">PrepareArtists</a>
+        <a class="btn btn-success" asp-controller="Experiment" asp-action="PrepareProducts">PrepareProducts</a>
+        <a class="btn btn-success" asp-controller="Experiment" asp-action="PrepareOrders">PrepareOrders</a>
+    </div>
+
+    <div>
+        <h2>CreateProduct</h2>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="CreateProduct" asp-route-times="1">1</a>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="CreateProduct" asp-route-times="10">10</a>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="CreateProduct" asp-route-times="20">20</a>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="CreateProduct" asp-route-times="50">50</a>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="CreateProduct" asp-route-times="100">100</a>
+    </div>
+
+    <div>
+        <h2>AddToShoppingCart</h2>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="AddToShoppingCart" asp-route-times="1">1</a>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="AddToShoppingCart" asp-route-times="10">10</a>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="AddToShoppingCart" asp-route-times="20">20</a>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="AddToShoppingCart" asp-route-times="50">50</a>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="AddToShoppingCart" asp-route-times="100">100</a>
+    </div>
+
+    <div>
+        <h2>CreateOrder</h2>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="CreateOrder" asp-route-times="1">1</a>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="CreateOrder" asp-route-times="10">10</a>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="CreateOrder" asp-route-times="20">20</a>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="CreateOrder" asp-route-times="50">50</a>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="CreateOrder" asp-route-times="100">100</a>
+    </div>
+
+    <div>
+        <h2>GetOrderbyNumber</h2>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="GetOrderbyNumber" asp-route-times="1">1</a>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="GetOrderbyNumber" asp-route-times="10">10</a>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="GetOrderbyNumber" asp-route-times="20">20</a>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="GetOrderbyNumber" asp-route-times="50">50</a>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="GetOrderbyNumber" asp-route-times="100">100</a>
+    </div>
+
+    <div>
+        <h2>GetAllOrders</h2>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="GetAllOrders" asp-route-times="1">1</a>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="GetAllOrders" asp-route-times="10">10</a>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="GetAllOrders" asp-route-times="20">20</a>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="GetAllOrders" asp-route-times="50">50</a>
+        <a class="btn btn-primary" asp-controller="Experiment" asp-action="GetAllOrders" asp-route-times="100">100</a>
+    </div>
+
 </div>
